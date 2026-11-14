@@ -1,0 +1,23 @@
+{
+  "recorded_at_utc": "2026-11-14T18:55:43.175090+00:00",
+  "python": "3.12.14",
+  "platform": "Windows-11-10.0.26100-SP0",
+  "command": "python -m pytest -q -m \"not browser and not external\"",
+  "exit_code": 0,
+  "junit": {
+    "tests": 23,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "source_sha256": {
+    "app.py": "a81466de8b9d7657d329411ef54f7b1f81359e4b3f6c9764ff07fd016e4852ce",
+    "conftest.py": "2fa8dd8052505e17e06f151e34c169b10a7269df3cc89fbe4953af5c14c6e7b0",
+    "tests/test_bdd.py": "93ae846d4e8d43ca455ec886441f71570f1102106954ed653bebe2f23f347c10",
+    "tests/test_board.py": "88109af605c32c9ca471598d37fcd8eaafc07f05be532c3e20bf09a53112a421",
+    "tests/test_browser.py": "1727466bdf25812f039f31d592145cb1526c903796b4c860ad4fd68405dcab16",
+    "tests/test_sauce.py": "655af2b657ac7c9f49078ffd076dfe0f499395d07d9a1ffd549789fe7ffaf6e6",
+    "tools/benchmark.py": "575c2fcd0c931649d0af50a2ed469cd347aa6a542828fd31d2f3c8cd96359c6e",
+    "tools/evidence.py": "21a5221fd32684ab59ea3ba3e95e9555a3a05098e7800f4b0db9660adb46e911"
+  }
+}

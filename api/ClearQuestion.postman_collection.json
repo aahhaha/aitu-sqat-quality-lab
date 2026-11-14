@@ -1,0 +1,51 @@
+{
+  "info": {
+    "name": "ClearQuestion API acceptance",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base",
+      "value": "http://127.0.0.1:8000"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "{{base}}/health"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"ready\", () => pm.expect(pm.response.json().status).to.eql(\"ready\"));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Public authorship projection",
+      "request": {
+        "method": "GET",
+        "url": "{{base}}/api/questions?room=R1"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"no author fields\", () => pm.response.json().forEach(q => pm.expect(q).not.to.have.property(\"author\")));"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

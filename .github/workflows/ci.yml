@@ -1,0 +1,87 @@
+name: Verify portfolio
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-dev.txt
+      - run: python tools/evidence.py
+
+      - run: python tools/benchmark.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: core-verification
+          path: reports/
+  browser:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome, firefox]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - run: python -m pip install -r requirements-dev.txt
+      - run: python -m pytest -m browser --alluredir=reports/allure-results --junitxml=reports/browser.xml
+        env:
+          TEST_BROWSER: ${{ matrix.browser }}
+      - name: Generate Allure HTML
+        if: always()
+        run: npx --yes allure-commandline@2.32.0 generate reports/allure-results --clean -o reports/allure-html
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-${{ matrix.browser }}
+          path: reports/
+  java-data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - run: mvn -B -f java-checks/pom.xml test
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: java-data-report
+          path: java-checks/target/surefire-reports/
+  jmeter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run JMeter against local instance
+        run: |
+          python app.py > /tmp/clearquestion-demo.log 2>&1 &
+          python -c "import time,urllib.request; time.sleep(2); assert urllib.request.urlopen('http://127.0.0.1:8000/health').status==200"
+          curl --fail --location https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.6.3.tgz -o /tmp/jmeter.tgz
+          tar -xzf /tmp/jmeter.tgz -C /tmp
+          mkdir -p reports
+          /tmp/apache-jmeter-5.6.3/bin/jmeter -n -t load/health.jmx -l reports/jmeter.jtl -j reports/jmeter.log
+          python -c "import csv; r=list(csv.DictReader(open('reports/jmeter.jtl'))); assert len(r)==100; assert all(x['success']=='true' and x['responseCode']=='200' for x in r)"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: jmeter-report
+          path: reports/
