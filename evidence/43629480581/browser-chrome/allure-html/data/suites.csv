@@ -1,0 +1,3 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","1288","test_student_flow_in_real_browser[<img src=x onerror=""window.injected=true"">]","tests","Sat Nov 14 18:58:11 UTC 2026","passed","Sat Nov 14 18:58:13 UTC 2026","","test_browser","",""
+"","2138","test_student_flow_in_real_browser[Explain the next step]","tests","Sat Nov 14 18:58:09 UTC 2026","passed","Sat Nov 14 18:58:11 UTC 2026","","test_browser","",""

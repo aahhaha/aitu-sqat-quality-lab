@@ -25,3 +25,11 @@ The report records timestamps, environment, test counts and source hashes.
 [docs/test-plan.md](docs/test-plan.md)  [docs/strategies.md](docs/strategies.md)  [docs/toolchain.md](docs/toolchain.md)
 
 [Preparation and attribution](PROVENANCE.md). Do not publish private keys, real student records or raw interview recordings.
+
+## Preserved CI evidence
+
+[Successful verification run](https://github.com/aahhaha/aitu-sqat-quality-lab/actions/runs/43629480581) tested source commit `73ca8eea3858048640b7093be31a84853ae21989`.
+[Preserved reports](evidence/43629480581) include machine-readable results and generated artifacts.
+The later evidence-only commit does not change the tested implementation.
+
+Chrome and Firefox each passed two browser scenarios. The retained Allure HTML reports can be viewed by serving their folders locally with `python -m http.server`. Java TestNG/Apache MetaModel and the 100-request JMeter run also passed. Sauce Labs remains an optional credential-dependent integration, not part of this execution record.

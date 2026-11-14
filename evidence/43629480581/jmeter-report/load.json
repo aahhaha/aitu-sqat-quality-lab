@@ -1,0 +1,10 @@
+{
+  "recorded_at_utc": "2026-11-14T18:56:20.792935+00:00",
+  "environment": "local loopback; four concurrent clients",
+  "requests": 100,
+  "errors": 0,
+  "p50_ms": 6.211900001289905,
+  "p95_ms": 13.81519999995362,
+  "max_ms": 205.33630000136327,
+  "target_p95_ms": 500
+}

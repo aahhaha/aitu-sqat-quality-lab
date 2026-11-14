@@ -1,0 +1,9 @@
+{
+  "subject": "SQAT",
+  "repository": "https://github.com/aahhaha/aitu-sqat-quality-lab",
+  "run_id": 43629480581,
+  "run_url": "https://github.com/aahhaha/aitu-sqat-quality-lab/actions/runs/43629480581",
+  "tested_commit": "73ca8eea3858048640b7093be31a84853ae21989",
+  "core_tests": 23,
+  "conclusion": "success"
+}
